@@ -15,7 +15,17 @@ public class StringComparator implements Comparator<String>{
 
 	@Override
 	public int compare(String s1, String s2) {
-		// TODO: To-be implemented
-		return 0;
+		int length = Math.min(s1.length(), s2.length());
+		for(int i = 0; i < length; i++) {
+			char c1 = s1.charAt(i);
+			char c2 = s2.charAt(i);
+			if(c1 < 91) { // HOW TO DEAL WITH CAPITOL LETTERS
+				
+			}
+			if(c1 != c2) {
+				return c1 - c2;
+			}
+		}
+		return s1.length() - s2.length();
 	}
 }
