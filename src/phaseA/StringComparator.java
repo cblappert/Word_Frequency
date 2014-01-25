@@ -12,16 +12,20 @@ import providedCode.*;
  * use are length and charAt.
  */
 public class StringComparator implements Comparator<String>{
-
+	
+	// Pre: strings passed not null else throws IllegalArgumentException
+	// Post: returns the comparison of the two strings - capitol letters 
+	// 		 will come before lower case letters, and shorter strings
+	// 		 will come before longer ones.
 	@Override
 	public int compare(String s1, String s2) {
+		if(s1 == null || s2 == null) {
+			throw new IllegalArgumentException();
+		}
 		int length = Math.min(s1.length(), s2.length());
 		for(int i = 0; i < length; i++) {
 			char c1 = s1.charAt(i);
 			char c2 = s2.charAt(i);
-			if(c1 < 91) { // HOW TO DEAL WITH CAPITOL LETTERS
-				
-			}
 			if(c1 != c2) {
 				return c1 - c2;
 			}
