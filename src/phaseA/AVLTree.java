@@ -24,14 +24,31 @@ import providedCode.*;
  * TODO: Develop appropriate JUnit tests for your AVLTree (TestAVLTree in 
  *    testA package).
  */
+
+/**
+ **   Christopher Blappert
+ **	  1/31/14
+ **	  CSE 332 AB
+ **	  Hye Kim
+ **   Programming project 2a
+ **
+ **	  This class provides an implementation of a generic
+ **   AVL tree that supports keeping counts of data values
+ **   and retreiving these counts. 
+ **/
+
 public class AVLTree<E> extends BinarySearchTree<E> {
-	
 	private static final int ALLOWED_IMBALANCE = 1;
 
+	// Pre: comparator passed not null
+	// Post: initializes an empty 
 	public AVLTree(Comparator<? super E> c) {
 		super(c);
 	}
 	
+	// Pre: comparator not null
+	// Post: increments the count of the data if it is already in the tree
+	// 		 otherwise adds it to the tree
 	@Override
 	public void incCount(E data) {
 		if (overallRoot == null) {
@@ -41,6 +58,8 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 		overallRoot = incCount(data, overallRoot);
 	}
 	
+	// Private helper method to increase the count of the data starting from
+	// a certain node
 	private BSTNode incCount(E data, BSTNode node) {
     	if(node == null) {
     		return new AVLNode(data);
@@ -57,83 +76,106 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     	return balance(node);
     }
 	
+	// Private helper method to balance a node if it is necessary 
 	@SuppressWarnings("unchecked")
 	private BSTNode balance(BSTNode node) {
 		if(node == null) {
 			return node;
 		}
-		if(height((AVLNode) node.left) - height((AVLNode) node.right) > ALLOWED_IMBALANCE) {
+		if(height((AVLNode) node.left) - height((AVLNode) node.right)  
+					> ALLOWED_IMBALANCE) {
 			if(height((AVLNode) node.left) >= height((AVLNode) node.right)) {
 				node = rotateWithLeftChild((AVLNode) node);
 			} else {
                 node = doubleWithLeftChild((AVLNode) node);
 			} 
-		} else if( height((AVLNode) node.right) - height((AVLNode) node.left) > ALLOWED_IMBALANCE) {
-            if( height((AVLNode) node.right.right) >= height((AVLNode) node.right.left)) {
+		} else if(height((AVLNode) node.right) - height((AVLNode) node.left)
+				> ALLOWED_IMBALANCE) {
+            if(height((AVLNode) node.right.right) >= 
+            			height((AVLNode) node.right.left)) {
             	node = rotateWithRightChild((AVLNode) node);
             } else {
             	node = doubleWithRightChild((AVLNode) node);
             }
 		}
-		((AVLNode) node).height = Math.max(height((AVLNode) node.left), height((AVLNode) node.right)) + 1;
+		((AVLNode) node).height = Math.max(height((AVLNode) node.left),
+				height((AVLNode) node.right)) + 1;
 		return node;
 	}
 	
-	/**
-     * Rotate binary tree node with left child.
-     * For AVL trees, this is a single rotation for case 1.
-     * Update heights, then return new root.
-     */
+	// Rotate AVLTreeNode with left child.
+    // Update heights, then return new root.
     @SuppressWarnings("unchecked")
-	private AVLNode rotateWithLeftChild(AVLNode k2) {
-    	AVLNode k1 = (AVLNode) k2.left;
-        k2.left = k1.right;
-        k1.right = k2;
-        k2.height = Math.max(height((AVLNode) k2.left), height((AVLNode) k2.right)) + 1;
-        k1.height = Math.max(height((AVLNode) k1.left), k2.height) + 1;
-        return k1;
+	private AVLNode rotateWithLeftChild(AVLNode node) {
+    	AVLNode lChild = (AVLNode) node.left;
+        node.left = lChild.right;
+        lChild.right = node;
+        node.height = Math.max(height((AVLNode) node.left), 
+        		height((AVLNode) node.right)) + 1;
+        lChild.height = Math.max(height((AVLNode) lChild.left), 
+        		node.height) + 1;
+        return lChild;
     }
 
-    /**
-     * Rotate binary tree node with right child.
-     * For AVL trees, this is a single rotation for case 4.
-     * Update heights, then return new root.
-     */
+    // Rotate AVLTreeNode with right child.
+    // Update heights, then return new root.
     @SuppressWarnings("unchecked")
-	private AVLNode rotateWithRightChild(AVLNode k1) {
-    	AVLNode k2 = (AVLNode) k1.right;
-        k1.right = k2.left;
-        k2.left = k1;
-        k1.height = Math.max(height((AVLNode) k1.left), height((AVLNode) k1.right)) + 1;
-        k2.height = Math.max(height((AVLNode) k2.right), k1.height) + 1;
-        return k2;
+	private AVLNode rotateWithRightChild(AVLNode node) {
+    	AVLNode rChild = (AVLNode) node.right;
+        node.right = rChild.left;
+        rChild.left = node;
+        node.height = Math.max(height((AVLNode) node.left), 
+        		height((AVLNode) node.right)) + 1;
+        rChild.height = Math.max(height((AVLNode) rChild.right), 
+        		node.height) + 1;
+        return rChild;
     }
 
-    /**
-     * Double rotate binary tree node: first left child
-     * with its right child; then node k3 with new left child.
-     * For AVL trees, this is a double rotation for case 2.
-     * Update heights, then return new root.
-     */
+    // Double rotate binary tree node to fix Left-Right imbalance
     @SuppressWarnings("unchecked")
-	private AVLNode doubleWithLeftChild(AVLNode k3) {
-        k3.left = rotateWithRightChild((AVLNode) k3.left);
-        return rotateWithLeftChild(k3);
+	private AVLNode doubleWithLeftChild(AVLNode node) {
+        node.left = rotateWithRightChild((AVLNode) node.left);
+        return rotateWithLeftChild(node);
     }
 
-    /**
-     * Double rotate binary tree node: first right child
-     * with its left child; then node k1 with new right child.
-     * For AVL trees, this is a double rotation for case 3.
-     * Update heights, then return new root.
-     */
+    // Double rotate binary tree node to fix Right-Left imbalance
     @SuppressWarnings("unchecked")
-	private AVLNode doubleWithRightChild(AVLNode k1) {
-        k1.right = rotateWithLeftChild((AVLNode) k1.right);
-        return rotateWithRightChild(k1);
+	private AVLNode doubleWithRightChild(AVLNode node) {
+        node.right = rotateWithLeftChild((AVLNode) node.right);
+        return rotateWithRightChild(node);
     }
 	
-	// To get correct heights
+    // Extra method to be used to test the form of an AVLTree
+    // will test for correct height, correct node order and balance
+    @SuppressWarnings("unchecked")
+	public void testAVLTree() {
+        testAVLTree((AVLNode) overallRoot);
+    }
+
+    // Private helper for determining if the AVLTree is correct
+    @SuppressWarnings("unchecked")
+	private void testAVLTree(AVLNode node) {
+        if(node == null) {
+            return;
+        }
+        if(height(node) != Math.max(height((AVLNode) node.right), 
+        		height((AVLNode) node.left)) + 1) {
+            throw new IllegalStateException();
+        }
+        if((node.left != null && comparator.compare(node.data, node.left.data)
+        		< 0) || (node.right != null && 
+        		comparator.compare(node.data, node.right.data) > 0)) {
+            throw new IllegalStateException();
+        }
+        if(Math.abs(height((AVLNode) node.right)-height((AVLNode) node.left))
+        		> ALLOWED_IMBALANCE) {
+            throw new IllegalStateException();
+        }
+        testAVLTree((AVLNode) node.right);
+        testAVLTree((AVLNode) node.left);
+    }
+    
+	// To get correct heights including null values
 	private int height(AVLNode node) {
 		if(node == null) {
 			return -1;
@@ -142,9 +184,11 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 		}
 	}
 	
-	// TODO: To-be implemented
+	// Nested class that adds a height field to the BSTNode
+	// so it can be used in an AVLTree
 	private class AVLNode extends BSTNode {
 		public int height;
+		
 		public AVLNode(E d) {
 			super(d);
 			height = 0;

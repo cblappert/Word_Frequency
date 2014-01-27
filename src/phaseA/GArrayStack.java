@@ -3,7 +3,7 @@
  **	  1/13/14
  **	  CSE 332 AB
  **	  Hye Kim
- **   Programming project 1a
+ **   Programming project 2a
  **
  **	  This class provides a resizeable array type implementation
  **   of a basic stack with only push, pop, peek, isEmpty functions.
