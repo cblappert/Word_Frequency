@@ -69,7 +69,7 @@ public class MoveToFrontList<E> extends DataCounter<E> {
 			if(foundNode) {
 				moveToFront(current);
 			} else {
-				current.next = new ListNode(data, current.next);
+				front = new ListNode(data, front);
 				size++;
 			}
 		}
