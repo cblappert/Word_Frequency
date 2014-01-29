@@ -45,9 +45,9 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     		node.count++;
     		return node;
     	} else if(cmp < 0) {
-    		node = incCount(data, node.left);
+    		node.left = incCount(data, node.left);
     	} else {
-    		node = incCount(data, node.right);
+    		node.right = incCount(data, node.right);
     	}
     	return balance(node);
     }

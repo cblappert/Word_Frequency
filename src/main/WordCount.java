@@ -11,8 +11,8 @@ import providedCode.*;
 public class WordCount {
 
 	
-	// TODO: Replace this comment with your own as appropriate.
-	// You may modify this method if you want.
+	// Pre: file passed is valid, counter not null
+	// Post: counts the occurrances of words in the file using the counter
     private static void countWords(String file, DataCounter<String> counter) {
         try {
             FileWordReader reader = new FileWordReader(file);
@@ -28,11 +28,8 @@ public class WordCount {
     }
     
     
-    // TODO: Replace this comment with your own as appropriate.
-    // Implement method that returns an array of DataCount objects containing each unique word.
-    // If generics confuse you, write non-generic version first and then adjust it.
     // Pre: counter passed not null, otherwise returns null
-    // Post: 
+    // Post: returns an array of DataCount objects containing each unique word
  	@SuppressWarnings("unchecked")
 	private static <E> DataCount<E>[] getCountsArray(DataCounter<E> counter) {
  		if(counter == null) {
@@ -57,21 +54,31 @@ public class WordCount {
         }
     }
     
-    
-    /** 
-     *  TODO: Replace this comment with your own as appropriate.
- 	 *  Edit this method (including replacing the dummy parameter checking below) 
- 	 *  to process all parameters as shown in the spec.
- 	 */
+    // Pre: paramenters are valid
+    // Post: processes parameters as shown in the spec
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: filename of document to analyze");
-            System.exit(1);
-        }
-        DataCounter<String> counter = new BinarySearchTree<String>(new StringComparator());
-        countWords(args[0], counter); 
-        DataCount<String>[] counts = getCountsArray(counter);
-        Sorter.insertionSort(counts, new DataCountStringComparator());
+    	DataCounter<String> counter = null;
+    	switch(args[0]) {
+    	case "-b": 
+    		counter = new BinarySearchTree<String>(new StringComparator()); 
+    		break;
+    	case "-a":
+    		counter = new AVLTree<String>(new StringComparator()); 
+    		break;
+    	case "-m":
+    		counter = new MoveToFrontList<String>(new StringComparator());
+    		break;
+    	}
+    	countWords(args[2], counter); 
+        DataCount<String>[] counts = getCountsArray(counter);        
+    	switch(args[1]) {
+    	case "-is": 
+    		Sorter.insertionSort(counts, new DataCountStringComparator());
+    		break;
+    	case "-hs":
+    		Sorter.heapSort(counts, new DataCountStringComparator());
+    		break;
+    	}
         printDataCount(counts);
     }
 }

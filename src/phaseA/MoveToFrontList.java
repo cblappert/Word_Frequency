@@ -69,7 +69,7 @@ public class MoveToFrontList<E> extends DataCounter<E> {
 			if(foundNode) {
 				moveToFront(current);
 			} else {
-				current.next = new ListNode(data);
+				current.next = new ListNode(data, current.next);
 				size++;
 			}
 		}
@@ -110,7 +110,7 @@ public class MoveToFrontList<E> extends DataCounter<E> {
 		}
 		return -1;
 	}
-
+	
 	// Post: returns an iterator for the object that can
 	//		 retrieve data in the form of DataCount objects
 	@Override
@@ -130,7 +130,7 @@ public class MoveToFrontList<E> extends DataCounter<E> {
 
 			@Override
 			public boolean hasNext() {
-				return current != null && current.next != null;
+				return current != null;
 			}
 		};
 	}
