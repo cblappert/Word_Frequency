@@ -11,6 +11,19 @@ import providedCode.*;
  * provided in Java's standard library; the only String methods you should 
  * use are length and charAt.
  */
+
+/**
+ **   @author Christopher Blappert, Michael Mitasev
+ **	  1/31/14
+ **	  CSE 332 AB
+ **	  Hye Kim
+ **   Programming project 2a
+ **
+ **	  This class provides an implementation of a simple
+ **   comparator for strings. Shorter strings and capital
+ **   letters will come first
+ **/
+
 public class StringComparator implements Comparator<String>{
 	
 	// Pre: strings passed not null else throws IllegalArgumentException

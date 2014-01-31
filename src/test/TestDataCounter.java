@@ -117,7 +117,7 @@ public abstract class TestDataCounter<E> {
 	public void test_iterator_one_item() {
 		dc.incCount(7);
 		SimpleIterator<DataCount<Integer>> iter = dc.getIterator();
-		assertEquals("Added 7, iterator should return one 7", 7, iter.next()); 
+		assertEquals("Added 7, iterator should return one 7", 7, (int) iter.next().data); 
 	}
 	
 	@Test(timeout = TIMEOUT)
