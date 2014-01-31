@@ -2,7 +2,7 @@ package phaseA;
 import providedCode.*;
 
 /**
- **   Christopher Blappert, Michael Mitasev
+ **   @author Christopher Blappert, Michael Mitasev
  **	  1/31/14
  **	  CSE 332 AB
  **	  Hye Kim
@@ -150,13 +150,16 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 	
 	// Extra method to be used to test the form of an AVLTree
     // will test for correct height, correct BST order and balance
+	// returns boolean representing this test
     @SuppressWarnings("unchecked")
-	public void testAVLTree() {
+	public boolean testAVLTree() {
+    	boolean test = true;
     	if(overallRoot != null) {
     		E min = findMin(overallRoot);
         	E max = findMax(overallRoot);
-    		testAVLTree((AVLNode) overallRoot, min, max);
+    		test = testAVLTree((AVLNode) overallRoot, min, max);
     	}
+    	return test;
     }
 
     // Method that finds the minimum value in the tree
@@ -199,23 +202,24 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     // Takes a node, and the max and min bounds for the possible
     // data values in that node according to BST form restrictions
     @SuppressWarnings("unchecked")
-	private void testAVLTree(AVLNode node, E min, E max) {
+	private boolean testAVLTree(AVLNode node, E min, E max) {
         if(node == null) {
-            return;
+            return true;
         }
         if(height(node) != Math.max(height((AVLNode) node.right), 
         		height((AVLNode) node.left)) + 1) {
-            throw new IllegalStateException();
+            return false;
         }
         if(comparator.compare(node.data, max) > 0 || 
         		comparator.compare(node.data, min) < 0) {
-            throw new IllegalStateException();
+        	return false;
         }
         if(Math.abs(height((AVLNode) node.right)-height((AVLNode) node.left))
         		> ALLOWED_IMBALANCE) {
-            throw new IllegalStateException();
+        	return false;
         }
-        testAVLTree((AVLNode) node.right, node.data, max);
-        testAVLTree((AVLNode) node.left, min, node.data);
+        boolean test1 = testAVLTree((AVLNode) node.right, node.data, max);
+        boolean test2 = testAVLTree((AVLNode) node.left, min, node.data);
+        return test1 && test2;
     }
 }

@@ -9,6 +9,17 @@ import providedCode.DataCount;
 import providedCode.DataCounter;
 import providedCode.SimpleIterator;
 
+/**
+ **   @author Christopher Blappert, Michael Mitasev
+ **	  1/31/14
+ **	  CSE 332 AB
+ **	  Hye Kim
+ **   Programming project 2a
+ **
+ **	  This class provides JUnit tests for any DataCounter
+ **   object, and does so by testing on Integers.
+ **/
+
 // Although this class is generic, I assume the getDataCounter
 // will return an DataCounter<Integer> so that I can add test code
 // that requires creating elements to put into the datacounter

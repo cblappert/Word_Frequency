@@ -9,6 +9,15 @@ import phaseA.*;
 import providedCode.*;
 import test.TestDataCounter;
 
+/**
+ **   @author Christopher Blappert, Michael Mitasev
+ **	  1/31/14
+ **	  CSE 332 AB
+ **	  Hye Kim
+ **   Programming project 2a
+ **
+ **	  This class provides JUnit tests for MoveToFrontList
+ **/
 
 public class TestMoveToFrontList extends TestDataCounter<Integer> {
 
