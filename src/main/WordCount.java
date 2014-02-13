@@ -2,6 +2,8 @@ package main;
 import java.io.IOException;
 
 import phaseA.*;
+import phaseB.HashTable;
+import phaseB.StringHasher;
 import providedCode.*;
 
 /**
@@ -68,6 +70,9 @@ public class WordCount {
     	case "-m":
     		counter = new MoveToFrontList<String>(new StringComparator());
     		break;
+    	case "-h":
+    		counter = new HashTable<String>(new StringComparator(), new StringHasher());
+    		break;
     	}
     	countWords(args[2], counter); 
         DataCount<String>[] counts = getCountsArray(counter);        
@@ -77,6 +82,18 @@ public class WordCount {
     		break;
     	case "-hs":
     		Sorter.heapSort(counts, new DataCountStringComparator());
+    		break;
+    	case "-os":
+    		Sorter.otherSort(counts, new DataCountStringComparator());
+    		break;
+    	default:
+    		if(args[1].startsWith("-k")) {
+    			int k = Integer.parseInt(args[1].substring(3));
+    			Sorter.topKSort(counts, new DataCountStringComparator(), k);
+    			// TODO: CHECK IF THIS IS RIGHT COMPARATOR/CHECK FOR WORKING
+    			// =========================================================
+    			// =========================================================
+    		}
     		break;
     	}
         printDataCount(counts);

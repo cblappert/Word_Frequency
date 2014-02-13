@@ -123,11 +123,11 @@ public class MoveToFrontList<E> extends DataCounter<E> {
 	// Nested class that is the nodes that contain the data and count 
 	// of each element contained in the list
 	private class ListNode {
-		public E data;
-		public int count;
-		public ListNode next;
+		private E data;
+		private int count;
+		private ListNode next;
 		
-		public ListNode(E d, ListNode node) {
+		private ListNode(E d, ListNode node) {
 			data = d;
 			next = node;
 			count = 1;

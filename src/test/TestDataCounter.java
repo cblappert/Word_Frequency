@@ -132,7 +132,7 @@ public abstract class TestDataCounter<E> {
 		int i = 0;
 		SimpleIterator<DataCount<Integer>> iter = dc.getIterator();
 		int[] actual = new int[expected.length];
-		while(iter.hasNext()) { actual[i++] = iter.next().data; }
+		while(iter.hasNext()) { actual[i++] = iter.next().data;}
 		
 		// Sort and test
 		Arrays.sort(actual);

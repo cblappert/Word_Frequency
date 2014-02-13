@@ -134,10 +134,10 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 	// Nested class that adds a height field to the BSTNode
 	// so it can be used in an AVLTree
 	private class AVLNode extends BSTNode {
-		public int height;
+		private int height;
 		
 		// Post: creates a new AVLNode with default height 0
-		public AVLNode(E d) {
+		private AVLNode(E d) {
 			super(d);
 			height = 0;
 		}
