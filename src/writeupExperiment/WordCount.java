@@ -106,12 +106,8 @@ public class WordCount {
     		if(args[1].startsWith("-k")) {
     			int k = Integer.parseInt(args[1].substring(3));
     			Sorter.topKSort(counts, new DataCountStringComparator(), k);
-    			// TODO: CHECK IF THIS IS RIGHT COMPARATOR/CHECK FOR WORKING
-    			// =========================================================
-    			// =========================================================
     		}
     		break;
     	}
-        printDataCount(counts);
     }
 }
